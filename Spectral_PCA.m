@@ -1,6 +1,7 @@
 clc
 clear all
 close all
+
 % Based on M2 data
 %% Read data file 
 
@@ -64,7 +65,7 @@ test_target=M2_bmd_cleaned(test(cv),:);
 % 
 % Xreg=Xregx(training(cv),:);
 % Xreg_t=Xregx(test(cv),:);
-model_x=fitlm(Xreg,train_target); % Linear Model
+% model_x=fitlm(Xreg,train_target); % Linear Model
 
 
 model=fitlm(train_data,train_target);
