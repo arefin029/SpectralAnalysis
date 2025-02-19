@@ -29,9 +29,14 @@ M2_class_cleaned=M2_class_cleaned(~row_nan,:)+1;
 M2_bmd_cleaned=M2_bmd(~isnan(M2_bmd));
 M2_bmd_cleaned=M2_bmd_cleaned(~row_nan,:);
 
-%% Exploratory data analysis 
+%% select data range
+
+range={200:1000;1000:2000;1500:2000}; % range selection for wavelength
+id=1; % set id for which range should be selected
+
+%% Exploratory data analysis
 % Normalize and PCA
-M2_data_norm=zscore(M2_data(:,:));
+M2_data_norm=zscore(M2_data(:,range{id}));
 [coeff,score,latent,~,explained_var]=pca(M2_data_norm);
 
 %Plot PCA
@@ -39,9 +44,9 @@ figure;
 gscatter(score(:,1),score(:,2),M2_class_cleaned, 'rgb', 'o', 8)
 
 figure
-plot(M2_wavelength(:),coeff(:,1))
+plot(M2_wavelength(range{id}),coeff(:,1))
 hold on
-plot(M2_wavelength(:),coeff(:,2))
+plot(M2_wavelength(range{id}),coeff(:,2))
 
 % Determine Explained variance and important components 
 explained_variance=cumsum(explained_var);
@@ -77,3 +82,7 @@ y_target=predict(model,test_data);
 error(i)=mean(abs(y_target-test_target));
 
 end
+
+
+Mean_abs_error=mean(abs(error));
+disp(Mean_abs_error)
